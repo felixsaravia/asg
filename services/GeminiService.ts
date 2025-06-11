@@ -2,13 +2,16 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { API_KEY_ERROR_MESSAGE, GENERIC_API_ERROR_MESSAGE } from '../constants';
 
-// Se reemplaza la obtención de la API_KEY desde process.env con la clave proporcionada.
-const API_KEY = "AIzaSyAD1PJoy6OLYee8hf8bsbqdwPXd49su8DA";
+// API_KEY is now obtained from environment variables as per guidelines.
+const API_KEY = process.env.API_KEY;
 
 const getAiClient = () => {
   if (!API_KEY) {
-    // Esta comprobación ahora es menos probable que falle, ya que la clave está codificada.
     console.error(API_KEY_ERROR_MESSAGE);
+    // It's good practice to inform the user or log this,
+    // but throwing an error here will stop the app if the key is missing.
+    // Consider how this should be handled in a production environment.
+    // For now, adhering to throwing an error if API_KEY is missing.
     throw new Error(API_KEY_ERROR_MESSAGE);
   }
   return new GoogleGenAI({ apiKey: API_KEY });
@@ -55,6 +58,9 @@ export const generateCbtGuidance = async (userInput: string): Promise<string> =>
     return response.text.trim();
   } catch (error) {
     console.error("Error generating CBT guidance:", error);
+    if (error.message === API_KEY_ERROR_MESSAGE) {
+        return API_KEY_ERROR_MESSAGE;
+    }
     return GENERIC_API_ERROR_MESSAGE;
   }
 };
@@ -79,6 +85,9 @@ export const simulateRolePlayResponse = async (scenario: string, userAnswer: str
     return response.text.trim();
   } catch (error) {
     console.error("Error simulating role play response:", error);
+    if (error.message === API_KEY_ERROR_MESSAGE) {
+        return API_KEY_ERROR_MESSAGE;
+    }
     return "Hmm, no estoy seguro de qué decir. ¿Podrías repetirlo?";
   }
 };

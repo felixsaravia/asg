@@ -1,5 +1,6 @@
 {
   "name": "Presente y Seguro - CBT App",
   "description": "An application to help users manage social anxiety using Cognitive Behavioral Therapy (CBT) techniques, emotional logging, gradual exposure, and other tools for mental well-being.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "prompt": ""
 }

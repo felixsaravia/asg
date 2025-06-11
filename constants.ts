@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 // Heroicons or FontAwesome icons (using React.createElement for SVGs)
@@ -154,6 +153,23 @@ const StarIcon = (props) => ( // Achievements
   }))
 );
 
+const ShieldCheckIcon = (props) => ( // Panic Prevention
+  React.createElement('svg', {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    stroke: "currentColor",
+    className: "w-6 h-6", // Default size, can be overridden by props
+    ...props
+  },
+  React.createElement('path', {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    d: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+  }))
+);
+
 
 export const NAV_ITEMS = [
   { name: 'Inicio', path: '/dashboard', icon: HomeIcon },
@@ -161,6 +177,7 @@ export const NAV_ITEMS = [
   { name: 'Reestructuración', path: '/restructure', icon: BrainIcon },
   { name: 'Exposición Gradual', path: '/exposure', icon: TrendingUpIcon },
   { name: 'Técnicas de Regulación', path: '/regulate', icon: HeartIcon },
+  { name: 'Prevenir Pánico', path: '/panic-prevention', icon: ShieldCheckIcon },
   { name: 'Habilidades Sociales', path: '/skills', icon: UsersIcon },
   { name: 'Material Educativo', path: '/learn', icon: AcademicCapIcon },
   { name: 'Logros', path: '/achievements', icon: StarIcon },
@@ -180,4 +197,42 @@ export const DEFAULT_ACHIEVEMENTS = [
     { id: 'first_thought_record', title: 'Pensador Crítico', description: 'Creaste tu primer registro de pensamiento.', unlocked: false, icon: '🤔' },
     { id: 'first_exposure', title: 'Paso Valiente', description: 'Completaste tu primer ejercicio de exposición.', unlocked: false, icon: '🚶' },
     { id: 'consistent_log_3days', title: 'Hábito de Bitácora', description: 'Registraste en tu bitácora por 3 días seguidos.', unlocked: false, icon: '🗓️' },
+];
+
+export const DAILY_SUGGESTIONS = [
+  {
+    id: 'sug1',
+    title: 'Respiración Consciente (3-5 min)',
+    description: 'Dedica unos minutos a la respiración diafragmática. Inhala contando hasta 4, sostén 4, exhala 6. Repite.',
+    actionText: 'Probar técnica de respiración',
+    actionLink: '/regulate',
+  },
+  {
+    id: 'sug2',
+    title: 'Pequeño Acto de Autocuidado',
+    description: 'Realiza una actividad breve que disfrutes y te relaje: escuchar una canción, estirarte, o tomar tu bebida favorita.',
+    actionText: 'Ver ideas de regulación',
+    actionLink: '/regulate',
+  },
+  {
+    id: 'sug3',
+    title: 'Observa un Pensamiento Negativo',
+    description: 'Identifica un pensamiento ansioso o negativo que hayas tenido hoy. Obsérvalo sin juzgarlo, como una nube pasajera.',
+    actionText: 'Ir a Reestructuración',
+    actionLink: '/restructure',
+  },
+  {
+    id: 'sug4',
+    title: 'Planifica un Pequeño Reto Social',
+    description: 'Piensa en una interacción social pequeña que podrías hacer hoy o mañana, como saludar a un vecino o preguntar algo a un empleado.',
+    actionText: 'Ver ideas de exposición',
+    actionLink: '/exposure',
+  },
+  {
+    id: 'sug5',
+    title: 'Anota Algo Positivo',
+    description: 'Escribe una cosa buena que te haya pasado hoy, por pequeña que sea, o algo por lo que estés agradecido/a.',
+    actionText: 'Ir a Bitácora Emocional',
+    actionLink: '/log',
+  }
 ];

@@ -6,7 +6,7 @@ import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { fetchMotivationalQuote } from '../../services/GeminiService';
 import { EmotionalLogEntry, ThoughtRecord, EmotionalFeeling } from '../../types';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { EMOTIONAL_LOG_KEY, THOUGHT_RECORDS_KEY, NAV_ITEMS } from '../../constants';
+import { EMOTIONAL_LOG_KEY, THOUGHT_RECORDS_KEY, NAV_ITEMS, DAILY_SUGGESTIONS } from '../../constants';
 import { ProgressBar } from '../ui/ProgressBar';
 import { EmotionalStateSelector } from './EmotionalStateSelector';
 
@@ -22,6 +22,13 @@ const ArrowRightIcon = (props: { className?: string; [key: string]: any; }) => (
   </svg>
 );
 
+interface DailySuggestion {
+  id: string;
+  title: string;
+  description: string;
+  actionText?: string;
+  actionLink?: string;
+}
 
 export const Dashboard: React.FC = () => {
   const [quote, setQuote] = useState<string>('');
@@ -29,6 +36,7 @@ export const Dashboard: React.FC = () => {
   const [emotionalLogs] = useLocalStorage<EmotionalLogEntry[]>(EMOTIONAL_LOG_KEY, []);
   const [thoughtRecords] = useLocalStorage<ThoughtRecord[]>(THOUGHT_RECORDS_KEY, []);
   const [currentFeeling, setCurrentFeeling] = useLocalStorage<EmotionalFeeling | null>('presenteSeguro_currentFeeling', null);
+  const [dailySuggestion, setDailySuggestion] = useState<DailySuggestion | null>(null);
 
   useEffect(() => {
     const getQuote = async () => {
@@ -38,6 +46,13 @@ export const Dashboard: React.FC = () => {
       setIsLoadingQuote(false);
     };
     getQuote();
+
+    // Select daily suggestion
+    const today = new Date();
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+    const suggestionIndex = dayOfYear % DAILY_SUGGESTIONS.length;
+    setDailySuggestion(DAILY_SUGGESTIONS[suggestionIndex]);
+
   }, []);
 
   const quickLinks = NAV_ITEMS.filter(item => ['/log', '/restructure', '/regulate'].includes(item.path));
@@ -105,20 +120,24 @@ export const Dashboard: React.FC = () => {
         </div>
       </Card>
 
-      <Card title="Sugerencia del Día">
-        <div className="flex items-start space-x-3">
-          <CheckCircleIcon className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-          <div>
-            <h4 className="font-semibold text-neutral-darker">Dedica 5 minutos a la respiración consciente.</h4>
-            <p className="text-sm text-neutral-dark mb-3">Puede ayudarte a centrarte y reducir la ansiedad antes de una situación social.</p>
-            <Link to="/regulate">
-              <Button size="sm" variant="secondary" rightIcon={<ArrowRightIcon/>}>
-                Probar técnica de respiración
-              </Button>
-            </Link>
+      {dailySuggestion && (
+        <Card title="Sugerencia del Día">
+          <div className="flex items-start space-x-3">
+            <CheckCircleIcon className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
+            <div>
+              <h4 className="font-semibold text-neutral-darker">{dailySuggestion.title}</h4>
+              <p className="text-sm text-neutral-dark mb-3">{dailySuggestion.description}</p>
+              {dailySuggestion.actionText && dailySuggestion.actionLink && (
+                <Link to={dailySuggestion.actionLink}>
+                  <Button size="sm" variant="secondary" rightIcon={<ArrowRightIcon/>}>
+                    {dailySuggestion.actionText}
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      )}
     </div>
   );
 };
