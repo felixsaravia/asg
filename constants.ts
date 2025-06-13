@@ -170,6 +170,29 @@ const ShieldCheckIcon = (props) => ( // Panic Prevention
   }))
 );
 
+const EyeLoupeIcon = (props) => ( // Hypervigilance Management
+  React.createElement('svg', {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    stroke: "currentColor",
+    className: "w-6 h-6",
+    ...props
+  },
+    React.createElement('path', {
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      d: "M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z"
+    }),
+    React.createElement('path', { // Simple eye representation inside the loupe
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+    })
+  )
+);
+
 
 export const NAV_ITEMS = [
   { name: 'Inicio', path: '/dashboard', icon: HomeIcon },
@@ -178,6 +201,7 @@ export const NAV_ITEMS = [
   { name: 'Exposición Gradual', path: '/exposure', icon: TrendingUpIcon },
   { name: 'Técnicas de Regulación', path: '/regulate', icon: HeartIcon },
   { name: 'Prevenir Pánico', path: '/panic-prevention', icon: ShieldCheckIcon },
+  { name: 'Manejo de Hipervigilancia', path: '/hypervigilance', icon: EyeLoupeIcon },
   { name: 'Habilidades Sociales', path: '/skills', icon: UsersIcon },
   { name: 'Material Educativo', path: '/learn', icon: AcademicCapIcon },
   { name: 'Logros', path: '/achievements', icon: StarIcon },

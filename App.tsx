@@ -14,6 +14,7 @@ import { AppShell } from './components/layout/AppShell';
 import { NavItemDefinition } from './types';
 import { NAV_ITEMS } from './constants'; // Path remains the same, .tsx will be resolved
 import { PanicAttackPrevention } from './components/panicPrevention/PanicAttackPrevention';
+import { HypervigilanceTool } from './components/hypervigilance/HypervigilanceTool';
 
 const App: React.FC = () => {
   const [isCrisisModalOpen, setIsCrisisModalOpen] = useState(false);
@@ -42,6 +43,7 @@ const App: React.FC = () => {
         <Route path="/exposure" element={<GradualExposure />} />
         <Route path="/regulate" element={<RegulationTechniques />} />
         <Route path="/panic-prevention" element={<PanicAttackPrevention />} />
+        <Route path="/hypervigilance" element={<HypervigilanceTool />} />
         <Route path="/skills" element={<SocialSkillsPractice />} />
         <Route path="/learn" element={<EducationalMaterial />} />
         <Route path="/achievements" element={<Achievements />} />
